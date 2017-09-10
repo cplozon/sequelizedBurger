@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Wine</title>
+</head>
+<body>
+
+    <!--Wine Select Box-->
+
+    <form id="wine-form">
+
+    <label for="wine-input">Enter A Wine To Search</label>
+
+    <input type="text" id="wine-input"><br>
+
+    <!--submit button-->
+
+    <input id="select-wine" type="submit" value="Enter">
+    </form>
+
+    <!--Wine Information-->
+
+    <div id="wine-div"></div>
+
+    </body>
+
+
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script>
+
+        var wineCounter = 10;
+
+        function searchWineInformation(wine){
+            var queryURL = "http://api.snooth.com/wines/?akey=jpdcqrqgxv6sc3eao019dbtgne6wezij10hhbmmr1t76z5t8&ip=66.28.234.115&q=" + wine + "&n=10";
+                $.ajax({
+                    url:queryURL,
+                    method:'GET'
+                }).done(function(response){
+                    //console.log(response);
+                    //console.log(queryURL);
+                    console.log(JSON.parse(response));
+                    //console.log(response.wines[1].name);
+                    //console.log(JSON.parse(response.meta.results));
+                    //alert("meta" + response.meta);
+                    //console.log(wines[1].name);
+
+
+
+
+                
+                var wineName = $("<h1>").text(response);
+              
+                //var wineRegion = $("<h2>").text(response.wines.0.region);
+                // var wineURL = $("<a>").attr("href",response.wines.link).append(wineName);
+                // var wineImage = $("<img>").attr("src", response.wines.image);
+
+
+                $("#wine-div").empty();
+                $("#wine-div").append(wineName);
+            });
+            }
+
+            $("#select-wine").on("click", function(event){
+                event.preventDefault();
+                var wine = $("#wine-input").val().trim();
+                //console.log(wine);
+                searchWineInformation(wine);
+            });
+            </script>
+            </html>
+
+   
+
+
